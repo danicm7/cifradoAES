@@ -29,17 +29,7 @@ import javax.crypto.spec.IvParameterSpec;
  * @author x
  */
 public class CifradoAES {
-
-    /*El salt se usa para cifrar la contraseña, es necesario conocer el salt para descifrar, el salt podria ser
-    aleatorio pero deberia conocerse tambien el salt para descifrar, para este ejemplo no usaremos un salt aleatorio
-     */
- /*
-        Este objeto se usa como vector de inicializacion para el cifrado de aes en 
-        modo cbc (utiliza los btes anteriores para cifrar los siguientes y necesita unos bytes iniciales), se podria usar numeros
-        aleatorios pero tambien son necesarios para el descifrado con lo cual ahora usaremos unos numeros fijos para no tener que guardar
-        el vector en alguna parte.
-        funcion para hacer el vector de inicializacion aleatorio: IvParameterSpec ivParameterSpec = AESUtil.generateIv();
-     */
+    //El algoritmo AES/CBC es mas seguro, pero requiere un vector de inicializacion
     static String algorithm = "AES/CBC/PKCS5Padding";
     static String ej = "C:\\Users\\yo\\Desktop\\foto.jpg";
 
@@ -63,6 +53,13 @@ public class CifradoAES {
                         //genera la clave
                         SecretKey key = AESUtil.getKeyFromPassword2(password, getHash(salt));
                         //vector de inicializacion para aes CBC(vector de inicializacion)
+                         /*
+                        Este objeto se usa como vector de inicializacion para el cifrado de aes en 
+                        modo cbc (utiliza los btes anteriores para cifrar los siguientes y necesita unos bytes iniciales), se podria usar numeros
+                        aleatorios pero tambien son necesarios para el descifrado con lo cual ahora usaremos unos numeros fijos para no tener que guardar
+                        el vector en alguna parte.
+                        funcion para hacer el vector de inicializacion aleatorio: IvParameterSpec ivParameterSpec = AESUtil.generateIv();
+                        */
                         IvParameterSpec ivParameterSpec = generaIv(password);
                         System.out.println("Introduce la ruta del archivo que desea encriptar:");
                         System.out.println("Por ejemplo: " + ej);
